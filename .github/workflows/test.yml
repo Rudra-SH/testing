@@ -1,9 +1,7 @@
 name: Rename Default Branch
 
 on:
-  push:
-    branches:
-      - main # Run the workflow on pushes to the main branch
+  workflow_dispatch:
 
 jobs:
   rename-default-branch:
