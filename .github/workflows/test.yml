@@ -1,0 +1,40 @@
+name: Rename Default Branch
+
+on:
+  push:
+    branches:
+      - main # Run the workflow on pushes to the main branch
+
+jobs:
+  rename-default-branch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check default branch
+        uses: actions/github-script@v5
+        with:
+          script: |
+            const defaultBranch = await github.rest.repos.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo
+            }).then(response => response.data.default_branch);
+
+            console.log(`Default branch: ${defaultBranch}`);
+
+            if (defaultBranch !== 'main') {
+              await github.rest.git.updateRef({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                ref: `heads/${defaultBranch}`,
+                sha: github.context.payload.before,
+                force: true
+              });
+              await github.rest.repos.update({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                default_branch: 'main'
+              });
+              console.log(`Default branch renamed to main`);
+            } else {
+              console.log(`Default branch is already main`);
+            }
+          github-token: ${{ secrets.GITHUB_TOKEN }}
