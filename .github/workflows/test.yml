@@ -1,73 +1,13 @@
-name: Get Logs for Blocks
+name: Fail Step with Error Message
 
-on:
-  push:
-    branches:
-      - main
+on: [push]
 
 jobs:
-  get_logs:
+  fail_step:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Get API Response
-        run: |
-          # Replace 'your_initial_api_call_command' with the actual command to call the API and save the response to 'blocksArray'
-          # For example: const blocksArray = await axios.get('https://api.example.com/blocks');
-
-      - name: Process Blocks and Get Logs
-        run: |
-          const axios = require('axios');
-
-          // Replace 'blocksArray' with the actual API response
-          const blocksArray = [
-            {
-              id: '0_1',
-              block: {
-                id: '0_1_1'
-              }
-            },
-            {
-              id: '0_2',
-              block: {
-                id: '0_2_1',
-                blocks: [
-                  // Array of nested blocks, if any
-                ]
-              }
-            }
-          ];
-
-          const logs = [];
-
-          // Process each block in the 'blocksArray'
-          for (const block of blocksArray) {
-            let currentBlock = block;
-            let hasNestedBlocks = true;
-
-            while (hasNestedBlocks) {
-              const id = currentBlock.id;
-              const nestedBlocks = currentBlock.block.blocks;
-
-              if (!nestedBlocks || nestedBlocks.length === 0) {
-                // If the block has no nested blocks, call the API to get logs
-                try {
-                  const logsResponse = await axios.get(`your_logs_api_url/${id}`);
-                  logs.push({ blockId: id, logs: logsResponse.data });
-                  hasNestedBlocks = false; // Set to false to exit the loop
-                } catch (error) {
-                  console.error(`Error fetching logs for block ${id}: ${error.message}`);
-                  hasNestedBlocks = false; // Set to false to exit the loop
-                }
-              } else {
-                // If the block has nested blocks, update 'currentBlock' to the first nested block and continue the loop
-                currentBlock = nestedBlocks[0];
-              }
-            }
-          }
-
-          // Use the 'logs' array as needed in subsequent steps
-          console.log('Logs:', logs);
+    - name: Failing Step
+      run: |
+        echo "This step is intentionally failing with an error message."
+        exit 1
