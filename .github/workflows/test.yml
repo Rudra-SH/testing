@@ -23,19 +23,20 @@ jobs:
       run: npm install @actions/github
 
     - name: Get Latest Release
-      id: get-latest-release
-      run: |
-        const { GitHub, context } = require('@actions/github');
-        const octokit = new GitHub(process.env.GITHUB_TOKEN);
-
-        const { owner, repo } = context.repo;
-
-        // Make a request to the GitHub Releases API
-        const latestRelease = await octokit.repos.getLatestRelease({ owner, repo });
-        const latestReleaseTag = latestRelease.data.tag_name;
-
-        // Set the output variable for later use
-        console.log(`::set-output name=latest_release::${latestReleaseTag}`);
+      uses: actions/github-script@v6
+      with:
+        script: |
+          const { GitHub, context } = require('@actions/github');
+          const octokit = new GitHub(process.env.GITHUB_TOKEN);
+  
+          const { owner, repo } = context.repo;
+  
+          // Make a request to the GitHub Releases API
+          const latestRelease = await octokit.repos.getLatestRelease({ owner, repo });
+          const latestReleaseTag = latestRelease.data.tag_name;
+  
+          // Set the output variable for later use
+          console.log(`::set-output name=latest_release::${latestReleaseTag}`);
 
     - name: Use Latest Release
       run: |
