@@ -26,7 +26,8 @@ jobs:
       uses: actions/github-script@v6
       with:
         script: |
-         const githubContext = require('@actions/github').context;
+         const date = $NOW;
+         /*const githubContext = require('@actions/github').context;
          const octokit = require('@actions/github').getOctokit(process.env.GITHUB_TOKEN);
   
          const { owner, repo } = githubContext.repo;
@@ -36,7 +37,7 @@ jobs:
          const latestReleaseTag = latestRelease.data.tag_name;
   
          // Set the output variable for later use
-         console.log(`::set-output name=latest_release::${latestReleaseTag}`);
+         console.log(`::set-output name=latest_release::${latestReleaseTag}`);*/
 
     - name: Use Latest Release
       run: |
