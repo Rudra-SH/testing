@@ -29,7 +29,7 @@ jobs:
           const { GitHub, context: githubContext } = require('@actions/github');
           const octokit = new GitHub(process.env.GITHUB_TOKEN);
   
-          const { owner, repo } = context.repo;
+          const { owner, repo } = githubContext.repo;
   
           // Make a request to the GitHub Releases API
           const latestRelease = await octokit.repos.getLatestRelease({ owner, repo });
