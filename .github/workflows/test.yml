@@ -26,17 +26,17 @@ jobs:
       uses: actions/github-script@v6
       with:
         script: |
-          const githubContext = require('@actions/github').context;
-          const octokit = require('@actions/github').getOctokit(process.env.GITHUB_TOKEN);
+         const githubContext = require('@actions/github').context;
+         const octokit = require('@actions/github').getOctokit(process.env.GITHUB_TOKEN);
   
-          const { owner, repo } = githubContext.repo;
+         const { owner, repo } = githubContext.repo;
   
-          // Make a request to the GitHub Releases API
-          const latestRelease = await octokit.repos.getLatestRelease({ owner, repo });
-          const latestReleaseTag = latestRelease.data.tag_name;
+         // Make a request to the GitHub Releases API
+         const latestRelease = await octokit.repos.getLatestRelease({ owner, repo });
+         const latestReleaseTag = latestRelease.data.tag_name;
   
-          // Set the output variable for later use
-          console.log(`::set-output name=latest_release::${latestReleaseTag}`);
+         // Set the output variable for later use
+         console.log(`::set-output name=latest_release::${latestReleaseTag}`);
 
     - name: Use Latest Release
       run: |
