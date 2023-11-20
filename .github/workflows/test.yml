@@ -26,10 +26,10 @@ jobs:
       uses: actions/github-script@v6
       with:
         script: |
-          const github = require('@actions/github');
-          const octokit = github.getOctokit(process.env.GITHUB_TOKEN);
+          const githubContext = require('@actions/github').context;
+          const octokit = require('@actions/github').getOctokit(process.env.GITHUB_TOKEN);
   
-          const { owner, repo } = github.context.repo;
+          const { owner, repo } = githubContext.repo;
   
           // Make a request to the GitHub Releases API
           const latestRelease = await octokit.repos.getLatestRelease({ owner, repo });
