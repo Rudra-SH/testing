@@ -1,13 +1,33 @@
-name: Fail Step with Error Message
+name: Get Latest Release
 
-on: [push]
+on:
+  workflow_run:
+    workflows: ["your_workflow_name"]
+    types:
+      - completed
+  push:
 
 jobs:
-  fail_step:
+  get-latest-release:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Failing Step
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Get Latest Release
+      id: get-latest-release
       run: |
-        echo "::error:: This step is intentionally failing with an error message."
-        exit 1
+        # Get the repository owner and name from the event payload
+        repo_owner=$(echo ${{ github.event.repository.full_name }} | cut -d '/' -f 1)
+        repo_name=$(echo ${{ github.event.repository.full_name }} | cut -d '/' -f 2)
+
+        # Make a request to the GitHub Releases API
+        latest_release=$(curl -s "https://api.github.com/repos/$repo_owner/$repo_name/releases/latest" | jq -r '.tag_name')
+
+        # Set the output variable for later use
+        echo "::set-output name=latest_release::$latest_release"
+
+    - name: Use Latest Release
+      run: |
+        # Use the latest release tag in subsequent steps
+        echo "Latest release: ${{ steps.get-latest-release.outputs.latest_release }}"
