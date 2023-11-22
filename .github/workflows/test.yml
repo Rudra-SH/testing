@@ -33,7 +33,7 @@ jobs:
       with:
         script: |
          const date = `${{ env.NOW }}`;
-         consloe.log(date);
+         console.log(date);
          /*const githubContext = require('@actions/github').context;
          const octokit = require('@actions/github').getOctokit(process.env.GITHUB_TOKEN);
   
