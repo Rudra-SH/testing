@@ -32,7 +32,7 @@ jobs:
       uses: actions/github-script@v6
       with:
         script: |
-         const date = ${ env.NOW };
+         const date = ${{ env.NOW }};
          /*const githubContext = require('@actions/github').context;
          const octokit = require('@actions/github').getOctokit(process.env.GITHUB_TOKEN);
   
