@@ -34,6 +34,8 @@ jobs:
         script: |
          const date = `${{ env.NOW }}`;
          console.log(date);
+         const date2 = `$(date +'%Y-%m-%d %H:%M:%S')`;
+         console.log(date2);
          /*const githubContext = require('@actions/github').context;
          const octokit = require('@actions/github').getOctokit(process.env.GITHUB_TOKEN);
   
