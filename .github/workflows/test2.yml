@@ -27,9 +27,11 @@ jobs:
           });
 
           const latestPR = response.data[0];
-          const approver = latestPR.requested_reviewers.length > 0
-            ? latestPR.requested_reviewers[0].login
-            : 'No approver found';
+          const approver = latestPR.requested_reviewers
+            ? (latestPR.requested_reviewers.length > 0
+                ? latestPR.requested_reviewers[0].login
+                : 'No approver found')
+            : 'No requested reviewers in the PR';
 
           core.setOutput('pr_number', latestPR.number);
           core.setOutput('approver', approver);
