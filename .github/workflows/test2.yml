@@ -1,0 +1,46 @@
+name: Merge PR into Main
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  merge-into-main:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Get Latest PR and Approver
+      uses: actions/github-script@v5
+      with:
+        script: |
+          const response = await github.rest.pulls.list({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            state: 'open',
+            sort: 'updated',
+            direction: 'desc',
+            per_page: 1
+          });
+
+          const latestPR = response.data[0];
+          const approver = latestPR.requested_reviewers.length > 0
+            ? latestPR.requested_reviewers[0].login
+            : 'No approver found';
+
+          core.setOutput('pr_number', latestPR.number);
+          core.setOutput('approver', approver);
+
+    - name: Merge PR into Main
+      if: ${{ steps.get-latest-pr.outputs.pr_number }}
+      run: |
+        pr_number=${{ steps.get-latest-pr.outputs.pr_number }}
+        github.rest.pulls.merge({
+          owner: github.context.repo.owner,
+          repo: github.context.repo.repo,
+          pull_number: pr_number,
+          commit_title: 'Merge PR into Main',
+        });
