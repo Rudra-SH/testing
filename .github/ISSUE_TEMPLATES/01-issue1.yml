@@ -1,0 +1,12 @@
+name: Issue 1
+description: This is issue 1
+title: "[Issue 1]:"
+labels: ["Issue1"]
+body:
+  type: input
+  id: input_1
+  attributes:
+    label: Input 1
+    description: This is input 1
+  validations:
+    required: true
