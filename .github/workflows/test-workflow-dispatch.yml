@@ -1,0 +1,54 @@
+name: Testing Workflow DIspatch
+
+on:
+  workflow_dispatch:
+    inputs:
+      var1:
+        type: string
+        required: true
+      var2:
+        type: string
+        required: true
+      var3:
+        type: string
+        required: true
+
+
+jobs:
+  testing-workflow-dispatch:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Get required fields
+      id: get-required-fields
+      uses: actions/github-script@v5
+      with:
+        script: |
+          const var1 = "${{ inputs.var1 }}";
+          const var2 = "${{ inputs.var2 }}";
+          const var3 = "${{ inputs.var3 }}";
+          console.log(var1);
+          console.log(var2);
+          console.log(var3);
+          core.setOutput('VAR1', var1);
+          core.setOutput('VAR2', var2);
+          core.setOutput('VAR3', var3);
+
+    - name: Printing fields
+      uses: actions/github-script@v5
+      with:
+        script: |
+          const var1 = "${{ steps.get-required-fields.outputs.VAR1 }};
+          const var2 = "${{ steps.get-required-fields.outputs.VAR2 }};
+          const var3 = "${{ steps.get-required-fields.outputs.VAR3 }};
+          console.log(var1);
+          console.log(var2);
+          console.log(var3);
+
+
+          
+        
+      
