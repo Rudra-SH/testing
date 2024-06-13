@@ -41,9 +41,9 @@ jobs:
       uses: actions/github-script@v5
       with:
         script: |
-          const var1 = "${{ steps.get-required-fields.outputs.VAR1 }};
-          const var2 = "${{ steps.get-required-fields.outputs.VAR2 }};
-          const var3 = "${{ steps.get-required-fields.outputs.VAR3 }};
+          const var1 = "${{ steps.get-required-fields.outputs.VAR1 }}";
+          const var2 = "${{ steps.get-required-fields.outputs.VAR2 }}";
+          const var3 = "${{ steps.get-required-fields.outputs.VAR3 }}";
           console.log(var1);
           console.log(var2);
           console.log(var3);
