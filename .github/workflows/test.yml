@@ -1,10 +1,6 @@
 name: Get Latest Release
 
 on:
-  workflow_run:
-    workflows: ["your_workflow_name"]
-    types:
-      - completed
   push:
 
 jobs:
@@ -54,3 +50,8 @@ jobs:
       run: |
         # Use the latest release tag in subsequent steps
         echo "Latest release: ${{ steps.get-latest-release.outputs.latest_release }}"
+
+    - name: Test Message
+      run: |
+        # Use the latest release tag in subsequent steps
+        echo "::info:: Test message"
