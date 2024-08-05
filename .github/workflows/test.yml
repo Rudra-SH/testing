@@ -2,6 +2,7 @@ name: Get Latest Release
 
 on:
   push:
+  workflow_dispatch:
 
 jobs:
   get-latest-release:
@@ -28,13 +29,13 @@ jobs:
       uses: actions/github-script@v6
       with:
         script: |
-         const date = `${{ env.NOW }}`;
+         /*const date = `${{ env.NOW }}`;
          console.log(date);
          const date2 = `$(date +'%Y-%m-%d %H:%M:%S')`;
          console.log(date2);
          const current_TimeInGMT = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
          console.log(current_TimeInGMT);
-         /*const githubContext = require('@actions/github').context;
+         const githubContext = require('@actions/github').context;
          const octokit = require('@actions/github').getOctokit(process.env.GITHUB_TOKEN);
   
          const { owner, repo } = githubContext.repo;
@@ -45,6 +46,7 @@ jobs:
   
          // Set the output variable for later use
          console.log(`::set-output name=latest_release::${latestReleaseTag}`);*/
+         const eventName = `${{ github.event_name }}`
 
     - name: Use Latest Release
       run: |
