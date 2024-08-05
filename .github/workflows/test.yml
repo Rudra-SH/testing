@@ -3,6 +3,8 @@ name: Get Latest Release
 on:
   push:
   workflow_dispatch:
+  pull_request:
+    types: opened
 
 jobs:
   get-latest-release:
