@@ -34,6 +34,7 @@ jobs:
         script: |
           const pullRequestNumber = `${{ github.context.payload.pull_request.number }}`
           console.log(pullRequestNumber);
+          core.error('This is an error message');
 
     - name: Get Latest Release
       uses: actions/github-script@v6
