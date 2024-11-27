@@ -36,7 +36,7 @@ jobs:
           console.log('====================')
 
     - name: Test flag
-      if: steps.set-flagoutputs.flag == 'true' && (failure() || cancelled())
+      if: steps.set-flag.outputs.flag == 'true' && (failure() || cancelled())
       run: |
         let flag = ${{ steps.set-flag.outputs.flag }};
         console.log(flag)
