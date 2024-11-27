@@ -31,6 +31,8 @@ jobs:
           }
           console.log(flag);
           core.setOutput('flag', flag);
+          core.setFailed('Testing Failure');
+          console.log('====================')
 
     - name: Test flag
       if: steps.get-latest-pr.outputs.flag == 'true' && (failure() || cancelled())
