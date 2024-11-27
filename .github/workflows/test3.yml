@@ -35,6 +35,12 @@ jobs:
           core.setFailed('Testing Failure');
           console.log('====================')
 
+    - name: Simulate long-running step
+      run: |
+        echo "Starting a long-running step..."
+        sleep 60 # Simulate a delay (adjust as needed)
+        echo "Step completed!"
+
     - name: Test flag
       if: steps.set-flag.outputs.flag == 'true' && (failure() || cancelled())
       run: |
