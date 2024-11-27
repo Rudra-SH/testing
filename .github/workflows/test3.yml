@@ -1,0 +1,39 @@
+name: Testing setOutput
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  merge-into-main:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set flag
+      uses: actions/github-script@v5
+      with:
+        script: |
+          let a = {
+            'a':1,
+            'b':2,
+            'c': {
+                'ca': '1ca',
+                'cb': 2
+            }
+          };
+          let flag = false;
+          if(a.c.ca){
+              flag = true;
+          }
+          core.setOutput('flag', flag);
+
+    - name: Test flag
+      if: ${{ steps.get-latest-pr.outputs.flag }} == 'true' && (faliled() || calcelled())
+      run: |
+        let flag = ${{ steps.get-latest-pr.outputs.flag }};
+        console.log(flag)
+        
