@@ -38,6 +38,4 @@ jobs:
     - name: Test flag
       if: steps.set-flag.outputs.flag == 'true' && (failure() || cancelled())
       run: |
-        let flag = ${{ steps.set-flag.outputs.flag }};
-        console.log(flag)
-        
+        echo "Flag is ${{ steps.set-flag.outputs.flag }}"
