@@ -27,19 +27,19 @@ jobs:
             }
           };
           let flag = false;
-          if(a.c.ca){
+          if(a.c.ba){
               flag = true;
           }
           console.log(flag);
           core.setOutput('flag', flag);
-          //core.setFailed('Testing Failure');
+          core.setFailed('Testing Failure');
           console.log('====================')
 
-    - name: Simulate long-running step
-      run: |
-        echo "Starting a long-running step..."
-        sleep 60 # Simulate a delay (adjust as needed)
-        echo "Step completed!"
+    # - name: Simulate long-running step
+    #   run: |
+    #     echo "Starting a long-running step..."
+    #     sleep 60 # Simulate a delay (adjust as needed)
+    #     echo "Step completed!"
 
     - name: Test flag
       if: steps.set-flag.outputs.flag == 'true' && (failure() || cancelled())
