@@ -32,7 +32,7 @@ jobs:
           }
           console.log(flag);
           core.setOutput('flag', flag);
-          core.setFailed('Testing Failure');
+          //core.setFailed('Testing Failure');
           console.log('====================')
 
     - name: Simulate long-running step
