@@ -29,10 +29,11 @@ jobs:
           if(a.c.ca){
               flag = true;
           }
+          console.log(flag);
           core.setOutput('flag', flag);
 
     - name: Test flag
-      if: ${{ steps.get-latest-pr.outputs.flag }} == 'true' && (faliled() || calcelled())
+      if: steps.get-latest-pr.outputs.flag == 'true' && (failure() || cancelled())
       run: |
         let flag = ${{ steps.get-latest-pr.outputs.flag }};
         console.log(flag)
