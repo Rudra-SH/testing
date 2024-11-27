@@ -14,6 +14,7 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Set flag
+      id: set-flag
       uses: actions/github-script@v5
       with:
         script: |
@@ -35,8 +36,8 @@ jobs:
           console.log('====================')
 
     - name: Test flag
-      if: steps.get-latest-pr.outputs.flag == 'true' && (failure() || cancelled())
+      if: steps.set-flagoutputs.flag == 'true' && (failure() || cancelled())
       run: |
-        let flag = ${{ steps.get-latest-pr.outputs.flag }};
+        let flag = ${{ steps.set-flag.outputs.flag }};
         console.log(flag)
         
